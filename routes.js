@@ -1,16 +1,44 @@
 var express = require('express')
 var router = express.Router();
 const db = require('./db_connection');
-
+const path = require('path');
 
 router.post('/addFieldata',function(req, res){ 
-    console.log(req.body);
+    let {template_name, ...data} = req.body;
+    if(!template_name){
+        res.status(200).send({
+            message : "Template not Verified",
+            status: 400
+        })   
+    }else{
+    let fields = '';
+    let values = '';
+    Object.keys(data).forEach(dt => {
+        fields += dt+",";
+        values += "'"+data[dt]+"',";
+    })
 
-    // var sql = "INSERT INTO employees (id, name, age, city) VALUES ('1', 'Ajeet Kumar', '27', 'Allahabad')";  
-    // db.query(sql, function (err, result) {  
-    // if (err) throw err;  
-    // console.log("1 record inserted");  
-    // });  
+    var sql = "INSERT INTO "+template_name+" ("+fields.substring(0, fields.length - 1)+") VALUES ("+values.substring(0, values.length - 1)+")"; 
+    db.query(sql, function (err, result) {  
+        if (err){
+            res.status(200).send({
+                message : "Error! Data not saved.",
+                status: 400
+            })
+        }
+        else{
+            // res.sendFile(path.join(__dirname + '/public/index.html'));
+            res.writeHead(301,
+                {Location: 'http://localhost:3000/templatelist'}
+              );
+              res.end();
+            // res.status(200).send({
+            //     message : "Successfully Done",
+            //     status: 200
+            // })
+        }
+    });
+   }
 });
 
 router.post('/addTemplates',function(req, res){ 

@@ -12,16 +12,16 @@ export class OpenTemplate extends Component {
             document.getElementById('template').innerHTML = "<h4>"+res.result.template_name+"</h4>"+res.result.template;
         }
       }
-    // onSubmit = e => {
-    //     e.preventDefault();
-    //     console.log(e);
-    //     // const values = {};
-    //     // fields.forEach(field => {
-    //     //     const { name } = field.attr;
-    //     //     if (name) values[name] = e.target[name].value;
-    //     // });
-    //     // console.log(values);
-    // };
+
+    onformSubmit() {
+        console.log('dfdfdsfd'); 
+        // const values = {};
+        // fields.forEach(field => {
+        //     const { name } = field.attr;
+        //     if (name) values[name] = e.target[name].value;
+        // });
+        // console.log(values);
+    };
    
     render() {
         return (

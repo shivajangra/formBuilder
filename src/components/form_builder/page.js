@@ -5,7 +5,6 @@ import FormFields from './form_fields';
 import API from '../../service/templateService';
 
 const button = '<div class="form-field col x-100 align-center"><input class="submit-btn" type="submit" value="Submit"></div>';
-
 // const fields = [
 //     {
 //         type: "input",
@@ -91,7 +90,8 @@ export default class Page extends Component {
     async saveTemplate() { 
         const values = {}; 
         let template = this.myRef.current;
-        values['template'] = template.innerHTML+""+button;
+        let temp = template.innerHTML.split('</form>');
+        values['template'] = temp[0]+""+button+'<input type="hidden" name="template_name" value="'+this.state.template_name+'" /></form>';
         values['template_name'] = this.state.template_name;
         let elements = document.forms['field_form'].elements;
         let len = elements.length;
@@ -172,3 +172,4 @@ export default class Page extends Component {
         )
     }
 }
+

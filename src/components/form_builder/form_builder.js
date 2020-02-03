@@ -7,7 +7,7 @@ export default class FormBuilder extends Component {
     const { fields } = this.props;
 
     return (
-      <form className="contact-form row" name="field_form" id="field_form"> 
+      <form className="contact-form row" name="field_form" id="field_form" method="post" action="http://localhost:4000/api/addFieldata"> 
             {fields.map(field => {
             switch (field.type) {
                 case "input":
@@ -57,3 +57,4 @@ export default class FormBuilder extends Component {
     );
   }
 }
+
