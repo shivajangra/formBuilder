@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import FormBuilder from "./form_builder";
 import FormFields from './form_fields';
 
+import API from '../../service/templateService';
+
+const button = '<div class="form-field col x-100 align-center"><input class="submit-btn" type="submit" value="Submit"></div>';
+
 // const fields = [
 //     {
 //         type: "input",
@@ -48,23 +52,12 @@ export default class Page extends Component {
 
     constructor(props) {
         super(props);
+        this.myRef = React.createRef();
         this.state = {
             type: null,
             fields:[]
         };
       }
-    
-    onSubmit = e => {
-        e.preventDefault();
-        console.log(e.target);
-        // const values = {};
-        // fields.forEach(field => {
-        //     const { name } = field.attr;
-        //     if (name) values[name] = e.target[name].value;
-        // });
-        // console.log(values);
-    };
-   
 
     setFieldsUi(e,val_type) {
         this.setState(state => ({ type: e , val_type: val_type }));
@@ -87,7 +80,7 @@ export default class Page extends Component {
         this.setState(prevState => ({
             fields: [...prevState.fields, current_field]
           }))
-          console.log(this.state);
+        //   console.log(this.state);
           this.closepopup(null);
       }
     
@@ -95,18 +88,49 @@ export default class Page extends Component {
          this.setState({[e.target.name]: e.target.value});
       }
 
+    async saveTemplate() { 
+        const values = {}; 
+        let template = this.myRef.current;
+        values['template'] = template.innerHTML+""+button;
+        values['template_name'] = this.state.template_name;
+        let elements = document.forms['field_form'].elements;
+        let len = elements.length;
+        let columns = [];
+        for (var i=0; i<len; i++){
+            columns.push(elements[i].name)
+        }
+        values['fields'] = columns;
+        try {
+            const response = await API.post('/addTemplates', values);
+            console.log('👉 Returned data:', response);
+            if(response.data.status === 200){
+                window.location.reload();
+            }
+          } catch (e) {
+            console.log(`😱 Axios request failed: ${e}`);
+          }
+    }
 
     
     render() {
          
         return (
-            <div>
+            <div className="page_body">
                 <div className="popups">
                     <FormFields handleChange={this.handleChange.bind(this)} showPopup={this.state.type} closepopup={this.closepopup.bind(this,null)} handleSubmit={this.handleSubmit.bind(this)}/>
                 </div>
                 <div className="build-form"> 
                     <div className="form-wrap form-builder">
-                        <FormBuilder onSubmit={this.onSubmit} fields={this.state.fields} />
+                        <div>
+                            <form id="template_form" name="template_form">
+                                <div className="input-group">
+                                     <input className="dynamic-input-control" type="text" onChange={e => this.setState({template_name:e.target.value})} name="template_name" placeholder="Page Title" />
+                                </div>
+                            </form>
+                        </div>
+                        <div ref={this.myRef}>
+                        <FormBuilder fields={this.state.fields} />
+                        </div>
                     </div>
                     <div id="cb-wrap" className="cb-wrap pull-right">
                         <ul id="control-box" className="frmb-control ui-sortable">
@@ -140,7 +164,7 @@ export default class Page extends Component {
                             </ul>
                             <div className="form-actions btn-group">
                                 <button type="button" className="btn clear">Clear</button>
-                                <button type="button" className="btn save">Save</button>
+                                <button type="button" onClick={this.saveTemplate.bind(this)} className="btn save">Save</button>
                             </div>
                         </div>
                     </div> 

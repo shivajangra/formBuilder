@@ -16,6 +16,7 @@ router.post('/addFieldata',function(req, res){
 router.post('/addTemplates',function(req, res){ 
     
     var template_name = req.body.template_name; 
+    console.log(template_name);
     let is_table_exist = "SHOW TABLES LIKE '"+template_name+"'";
     db.query(is_table_exist, function (err, result) { 
         if(result.length == 0){
@@ -73,6 +74,25 @@ router.post('/addTemplates',function(req, res){
         }
     });
 
+});
+
+router.get('/getTemplateDetail/:id',function(req, res){
+    var sql = "Select * from templates where id = "+req.params.id;
+    db.query(sql, function (err, result) {  
+        if (err){
+            res.status(200).send({
+                    success: false,
+                    status: 400
+                })
+        }else{
+            res.status(200).send({
+                    success: true,
+                    status: 200,
+                    result :result.length>0?result[0]:result
+                })
+        }
+     
+    });  
 });
 
 router.get('/getTemplates',function(req, res){

@@ -1,5 +1,5 @@
  
-body {
+.page_body {
   width: 100%;
   background-image: url(/demo-background.svg),linear-gradient(to bottom,#d4d4d4,#733872);
   background-size: 100% 100%;
@@ -7,7 +7,19 @@ body {
   background-repeat: no-repeat;
   padding: 0;
 }
-  
+nav.page_body {
+  height: 25px;
+  padding: 10px 20px;
+}
+
+nav.page_body a {
+  display: inline-block;
+  padding: 0 5px;
+  text-decoration: none;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
 .build-form{
   display: flex;
 }
@@ -132,4 +144,45 @@ body {
   margin: auto;  
   border-radius: 20px;  
   background: transparent; 
+}
+
+.templates{
+  color: #FFF;
+  padding: 10px;
+}
+
+.panel {
+  padding: 0px 10px;
+  display: inline-flex;
+}
+
+.card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  color: #000000;
+  width: 100%;
+}
+.w-3{
+  width: 25%;
+}
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+.cursor{
+  cursor: pointer;
 }
