@@ -13,16 +13,7 @@ export class OpenTemplate extends Component {
         }
       }
 
-    onformSubmit() {
-        console.log('dfdfdsfd'); 
-        // const values = {};
-        // fields.forEach(field => {
-        //     const { name } = field.attr;
-        //     if (name) values[name] = e.target[name].value;
-        // });
-        // console.log(values);
-    };
-   
+    
     render() {
         return (
             <div id="template" className="get-in-touch">  

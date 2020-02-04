@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import API from '../../service/templateService';
-// import { useHistory } from "react-router-dom";
 
 export class TemplateList extends Component {
     constructor(props) {
@@ -24,7 +23,6 @@ export class TemplateList extends Component {
         console.log(item);
     }
     onformSubmit(dta) { 
-        console.log(dta.id)
         this.props.history.push(`/opentemplate/${dta.id}`);
     }
 

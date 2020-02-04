@@ -56,6 +56,7 @@ export default class Page extends Component {
             type: null,
             fields:[]
         };
+       
       }
 
     setFieldsUi(e,val_type) {

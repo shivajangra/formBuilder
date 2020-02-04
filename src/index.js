@@ -3,27 +3,26 @@ import ReactDOM from 'react-dom';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
   } from "react-router-dom";
 import './index.css';
 import App from './App'; 
+import Auth from './components/auth/auth';
 import OpenTemplate from './components/template/open_template';
 import TemplateList from './components/template/template_list';
+// import Header from './layout/header';
 // ReactDOM.render(<App />, document.getElementById('root'));
  
 ReactDOM.render((
     <Router>
         <div> 
-        <nav className="page_body">
-          <Link to="/">Create template</Link>
-          <Link to="/templatelist">TemplateList</Link>
-        </nav>
+        {/* <Header /> */}
   
         <Switch>
-          <Route exact path="/" component={App} />
+          <Route exact path="/" component={Auth} />
           <Route path='/opentemplate/:tempId' component={OpenTemplate} />
           <Route path="/templatelist" component={TemplateList} />
+          <Route path="/createtemplate" component={App} />
         </Switch>
         </div>
      </Router>
