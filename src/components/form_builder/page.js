@@ -54,7 +54,8 @@ export default class Page extends Component {
         this.myRef = React.createRef();
         this.state = {
             type: null,
-            fields:[]
+            fields:[],
+            options: []
         };
        
       }
@@ -68,14 +69,38 @@ export default class Page extends Component {
  
      handleSubmit(e) {
         e.preventDefault();
-        let current_field = {
-            type: this.state.type?this.state.type:'input',
-            attr: { 
-                    type: this.state.val_type?this.state.val_type:'',
-                    name: this.state.name?this.state.name:'name',
-                    placeholder: this.state.placeholder?this.state.placeholder:''
+        let current_field = {};
+        if(this.state.type === 'input'){
+            current_field = {
+                type: this.state.type?this.state.type:'input',
+                attr: { 
+                        type: this.state.val_type?this.state.val_type:'',
+                        name: this.state.name?this.state.name:'name',
+                        placeholder: this.state.placeholder?this.state.placeholder:''
+                    }
                 }
-            }
+        }else if(this.state.type === 'select'){
+            let options = [];
+            let group = this.state.options.reduce((r, aa) => {
+                r[aa.id.split('_')[0]] = [...r[aa.id.split('_')[0]] || [], aa];
+                return r;
+               }, {});
+               console.log(group)
+            Object.keys(group).forEach(el=>{
+                options.push({label : group[el][0].value, value: group[el][1].value})
+            })
+            console.log(options)
+            current_field = {
+                type: this.state.type?this.state.type:'input',
+                options :  options,
+                attr: { 
+                        type: this.state.val_type?this.state.val_type:'',
+                        name: this.state.name?this.state.name:'name',
+                        placeholder: this.state.placeholder?this.state.placeholder:''
+                    }
+                }
+        }
+        
         this.setState({})
         this.setState(prevState => ({
             fields: [...prevState.fields, current_field]
@@ -112,13 +137,17 @@ export default class Page extends Component {
           }
     }
 
-    
+    addOptions(e){
+        this.setState({options:e});
+        // console.log(this.state);
+    }
+
     render() {
          
         return (
             <div className="page_body">
                 <div className="popups">
-                    <FormFields handleChange={this.handleChange.bind(this)} showPopup={this.state.type} closepopup={this.closepopup.bind(this,null)} handleSubmit={this.handleSubmit.bind(this)}/>
+                    <FormFields options={this.addOptions.bind(this)} handleChange={this.handleChange.bind(this)} showPopup={this.state.type} closepopup={this.closepopup.bind(this,null)} handleSubmit={this.handleSubmit.bind(this)}/>
                 </div>
                 <div className="build-form"> 
                     <div className="form-wrap form-builder">
