@@ -70,16 +70,7 @@ export default class Page extends Component {
      handleSubmit(e) {
         e.preventDefault();
         let current_field = {};
-        if(this.state.type === 'input'){
-            current_field = {
-                type: this.state.type?this.state.type:'input',
-                attr: { 
-                        type: this.state.val_type?this.state.val_type:'',
-                        name: this.state.name?this.state.name:'name',
-                        placeholder: this.state.placeholder?this.state.placeholder:''
-                    }
-                }
-        }else if(this.state.type === 'select'){
+       if(this.state.type === 'select'){
             let options = [];
             let group = this.state.options.reduce((r, aa) => {
                 r[aa.id.split('_')[0]] = [...r[aa.id.split('_')[0]] || [], aa];
@@ -99,13 +90,23 @@ export default class Page extends Component {
                         placeholder: this.state.placeholder?this.state.placeholder:''
                     }
                 }
-        }
+        }else{
+            current_field = {
+                type: this.state.type?this.state.type:'input',
+                innerhtml: this.state.innerhtml?this.state.innerhtml:null,
+                attr: { 
+                        type: this.state.val_type?this.state.val_type:'',
+                        name: this.state.name?this.state.name:'name',
+                        placeholder: this.state.placeholder?this.state.placeholder:''
+                    }
+                }
+        } 
         
         this.setState({})
         this.setState(prevState => ({
             fields: [...prevState.fields, current_field]
           }))
-        //   console.log(this.state);
+          console.log(this.state);
           this.closepopup(null);
       }
     
@@ -170,7 +171,7 @@ export default class Page extends Component {
                             <li className="icon-text input-control input-control-9 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'input','text')} data-type="text">
                                 <span>Text Field</span>
                             </li>
-                            <li className="icon-textarea input-control input-control-13 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'textarea')} data-type="textarea">
+                            <li className="icon-textarea input-control input-control-13 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'textarea','')} data-type="textarea">
                                 <span>Text Area</span>
                             </li>
                             <li className="icon-number input-control input-control-12 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'number','number')} data-type="number">
@@ -179,16 +180,16 @@ export default class Page extends Component {
                             <li className="icon-checkbox-group input-control input-control-6 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'checkbox')} data-type="checkbox-group">
                                 <span>Checkbox Group</span>
                             </li>
-                            <li className="icon-date input-control input-control-11 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'date')} data-type="date">
+                            <li className="icon-date input-control input-control-11 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'date','date')} data-type="date">
                                 <span>Date Field</span>
                             </li>
-                            <li className="icon-file input-control input-control-10 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'file')} data-type="file">
+                            <li className="icon-file input-control input-control-10 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'file','file')} data-type="file">
                                 <span>File Upload</span>
                             </li>
-                            <li className="icon-hidden input-control input-control-2 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'hidden')} data-type="hidden">
+                            {/* <li className="icon-hidden input-control input-control-2 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'input','hidden')} data-type="hidden">
                                 <span>Hidden Input</span>
-                            </li>
-                            <li className="icon-paragraph input-control input-control-3 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'paragraph')} data-type="paragraph">
+                            </li> */}
+                            <li className="icon-paragraph input-control input-control-3 ui-sortable-handle" onClick={this.setFieldsUi.bind(this,'paragraph','paragraph')} data-type="paragraph">
                                 <span>Paragraph</span>
                             </li>
                             </ul>

@@ -24,6 +24,27 @@ export default class FormBuilder extends Component {
                         </div>
                 );
 
+                case "date":
+                  return(
+                          <div className="form-field col x-50" key={uuid.v4()}>
+                              <input className="input-text js-input" key={uuid.v4()} {...field.attr} />
+                          </div>
+                  );
+
+                case "file":
+                  return(
+                          <div className="form-field col x-50" key={uuid.v4()}>
+                              <input className="input-text js-input" key={uuid.v4()} {...field.attr} />
+                          </div>
+                  );
+                
+
+                case "paragraph":
+                  return(
+                          <div className="col x-100" key={uuid.v4()}>
+                              <p>{field.innerhtml}</p>
+                          </div>
+                  );
 
                 case "select":
                 return (
